@@ -1,4 +1,4 @@
 ## Faculty Directory coding exercise
 
-* Last updated: 09/29/23
+* Last updated: 02/09/24
 
