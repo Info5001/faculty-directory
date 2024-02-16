@@ -1,52 +1,60 @@
 package model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class FacultyDirectory {
-    ArrayList<Faculty> facultyList;
-    
+    private ArrayList<FacultyProfile> facultyProfiles;
+
     public FacultyDirectory() {
-        facultyList = new ArrayList<Faculty>();
+        facultyProfiles = new ArrayList<FacultyProfile>();
     }
 
-    public Faculty addNewFaculty(String fullName, String position, String department, String email){
-        Faculty newFaculty = new Faculty(fullName, position, department, email);
-        facultyList.add(newFaculty);
+    public FacultyProfile addNewFaculty(String name, String position, String department) {
+        FacultyProfile newFaculty = new FacultyProfile(name, position, department);
+        facultyProfiles.add(newFaculty);
         return newFaculty;
     }
 
-    public void removeFaculty(int index){
-        facultyList.remove(index);
-    }
-
-    public void clearAllElements(){
-        facultyList.clear();
-    }
-
-    public void printFacultyList(){
-        System.out.println("Printing faculty list:");
-
-        for (Faculty faculty : facultyList) {
-            System.out.print(facultyList.indexOf(faculty) + 1 + ". ");
-            faculty.printInformation();
+    public void printAllMembers() {
+        for (FacultyProfile eachfaculty : facultyProfiles) {
+            eachfaculty.printFacultyInfo();
         }
-
-        printNumberOfElements();
     }
 
-    public Faculty searchFaculty(String fullName){
-        for (Faculty faculty : facultyList) {
-            if (faculty.getFullName().equals(fullName)) {
-                return faculty;
+    public void findFaculty(String searchTerm) {
+        System.out.println("Searching for " + searchTerm + " ....");
+        for (FacultyProfile eachfaculty : facultyProfiles) {
+            if (eachfaculty.getFullName().startsWith(searchTerm)) {
+                System.out.println("Faculty found:");
+                eachfaculty.printFacultyInfo();
+                return;
             }
         }
-        return null;
+        System.out.println("Faculty not found");
     }
 
-    public void printNumberOfElements(){
-        System.out.println("Number of elements in the list: " + facultyList.size());
+    public void filterByDepartment(String filterTerm) {
+        System.out.println("List of faculty filtered by department name: " + filterTerm);
+        // Create a new array list to store the filtered profiles
+        ArrayList<FacultyProfile> filteredProfiles = new ArrayList<FacultyProfile>();
+
+        // Loop through the facultyProfiles array list and add the matching profiles to
+        // the
+        for (FacultyProfile eachfaculty : facultyProfiles) {
+            if (eachfaculty.getDepartment().startsWith(filterTerm)) {
+                filteredProfiles.add(eachfaculty);
+            }
+        }
+
+        // print the filtered profiles
+        if (filteredProfiles.size() == 0) {
+            System.out.println("No faculty found in the department: " + filterTerm);
+            return;
+        }
+
+        for (FacultyProfile eachfaculty : filteredProfiles) {
+            eachfaculty.printFacultyInfo();
+        }
     }
-
-    // TODO: We will add some additional methods here later.
-
 }
